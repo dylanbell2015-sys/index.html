@@ -193,6 +193,33 @@
   .footer-links a { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.3s; }
   .footer-links a:hover { color: var(--gold-light); }
 
+  /* EXPENSES */
+  .expenses { background: var(--black2); }
+  .expenses-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: start; margin-top: 60px; }
+  .expense-form { display: flex; flex-direction: column; gap: 16px; padding: 32px; border: 1px solid rgba(201,160,48,0.1); background: rgba(201,160,48,0.02); }
+  .expense-form label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); display: flex; flex-direction: column; gap: 6px; }
+  .expense-form input[type="text"], .expense-form input[type="number"], .expense-form input[type="date"] { background: var(--black); border: 1px solid rgba(201,160,48,0.2); color: var(--text); padding: 12px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; }
+  .expense-form input:focus { outline: none; border-color: var(--gold-mid); }
+  .expense-recurring-row { flex-direction: row !important; align-items: center; gap: 10px !important; }
+  .expense-recurring-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--gold-mid); }
+  .expense-form button { margin-top: 8px; }
+  .expense-summary { display: flex; gap: 24px; margin-bottom: 24px; }
+  .expense-summary-card { flex: 1; padding: 20px 24px; border: 1px solid rgba(201,160,48,0.15); background: rgba(201,160,48,0.04); }
+  .expense-summary-card .label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
+  .expense-summary-card .value { font-family: 'Bebas Neue', sans-serif; font-size: 32px; background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .expense-list { list-style: none; display: flex; flex-direction: column; gap: 10px; max-height: 420px; overflow-y: auto; }
+  .expense-item { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 20px; border: 1px solid rgba(201,160,48,0.1); background: rgba(201,160,48,0.02); transition: border-color 0.3s, background 0.3s; }
+  .expense-item:hover { border-color: rgba(201,160,48,0.25); background: rgba(201,160,48,0.05); }
+  .expense-item-main { display: flex; flex-direction: column; gap: 4px; }
+  .expense-item-name { font-size: 14px; color: var(--text); }
+  .expense-item-meta { font-size: 11px; color: var(--text-dim); display: flex; align-items: center; gap: 8px; }
+  .expense-badge { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border: 1px solid rgba(201,160,48,0.4); color: var(--gold-light); }
+  .expense-item-right { display: flex; align-items: center; gap: 14px; }
+  .expense-item-amount { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--gold-light); }
+  .expense-delete { background: none; border: none; color: var(--text-dim); cursor: none; font-size: 16px; line-height: 1; transition: color 0.3s; }
+  .expense-delete:hover { color: #e05050; }
+  .expense-empty { font-size: 14px; color: var(--text-dim); font-style: italic; padding: 20px; }
+
   /* SCROLL REVEAL */
   .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -208,7 +235,7 @@
     .convai-widget { display: none; }
     nav { padding: 20px 24px; }
     .section-pad { padding: 80px 24px; }
-    .problem-grid, .hiw-grid, .services-grid, .roi-inner, .services-header { grid-template-columns: 1fr; gap: 40px; }
+    .problem-grid, .hiw-grid, .services-grid, .roi-inner, .services-header, .expenses-grid { grid-template-columns: 1fr; gap: 40px; }
     .stats-bar { grid-template-columns: repeat(2, 1fr); padding: 0 24px; }
     .stat-item:nth-child(2) { border-right: none; }
     .cta-section { padding: 100px 24px; }
@@ -232,6 +259,7 @@
     <a href="#services">Services</a>
     <a href="#how">How It Works</a>
     <a href="#results">Results</a>
+    <a href="#expenses">Expenses</a>
     <a href="https://calendar.app.google/FsSkCc3mFtftnvyp6" class="nav-cta">Book a Call</a>
   </div>
 </nav>
@@ -368,6 +396,46 @@
   </div>
 </section>
 
+<!-- EXPENSES -->
+<section class="expenses section-pad" id="expenses">
+  <span class="section-tag reveal">Budgeting Tool</span>
+  <h2 class="section-title reveal reveal-delay-1">EXPENSE TRACKER</h2>
+  <p class="section-body reveal reveal-delay-2">Log one-time costs or set up a recurring monthly payment from the date it started — it'll automatically be added to your total every month going forward.</p>
+
+  <div class="expenses-grid reveal reveal-delay-3">
+    <form class="expense-form" id="expenseForm">
+      <label>Description
+        <input type="text" id="expName" placeholder="e.g. Software subscription" required>
+      </label>
+      <label>Amount ($)
+        <input type="number" id="expAmount" step="0.01" min="0" placeholder="0.00" required>
+      </label>
+      <label>Date Started
+        <input type="date" id="expDate" required>
+      </label>
+      <label class="expense-recurring-row">
+        <input type="checkbox" id="expRecurring">
+        Recurring monthly payment
+      </label>
+      <button type="submit" class="btn-primary">Add Expense</button>
+    </form>
+
+    <div>
+      <div class="expense-summary">
+        <div class="expense-summary-card">
+          <div class="label">This Month</div>
+          <div class="value" id="expMonthTotal">$0.00</div>
+        </div>
+        <div class="expense-summary-card">
+          <div class="label">Recurring / Month</div>
+          <div class="value" id="expRecurringTotal">$0.00</div>
+        </div>
+      </div>
+      <ul class="expense-list" id="expenseList"></ul>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="cta-section" id="contact">
   <div class="cta-line"></div>
@@ -446,6 +514,135 @@
       arrow.classList.toggle('expanded');
     });
   });
+
+  // Expense tracker
+  (function () {
+    const STORAGE_KEY = 'vog_expenses';
+    const form = document.getElementById('expenseForm');
+    const list = document.getElementById('expenseList');
+    const monthTotalEl = document.getElementById('expMonthTotal');
+    const recurringTotalEl = document.getElementById('expRecurringTotal');
+    if (!form || !list) return;
+
+    function loadExpenses() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+      catch (e) { return []; }
+    }
+    function saveExpenses(expenses) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(expenses));
+    }
+    function formatMoney(n) {
+      return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    function formatDate(dateStr) {
+      const d = new Date(dateStr + 'T00:00:00');
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+    // True if a recurring expense that started on startDateStr is active during the
+    // given year/month (i.e. its start month/year is on or before the target one).
+    function isRecurringActiveInMonth(startDateStr, year, month) {
+      const start = new Date(startDateStr + 'T00:00:00');
+      const startKey = start.getFullYear() * 12 + start.getMonth();
+      const targetKey = year * 12 + month;
+      return startKey <= targetKey;
+    }
+
+    function render() {
+      const expenses = loadExpenses();
+      const now = new Date();
+      const curYear = now.getFullYear();
+      const curMonth = now.getMonth();
+
+      let monthTotal = 0;
+      let recurringTotal = 0;
+
+      expenses.forEach(exp => {
+        if (exp.recurring) {
+          recurringTotal += exp.amount;
+          if (isRecurringActiveInMonth(exp.date, curYear, curMonth)) monthTotal += exp.amount;
+        } else {
+          const d = new Date(exp.date + 'T00:00:00');
+          if (d.getFullYear() === curYear && d.getMonth() === curMonth) monthTotal += exp.amount;
+        }
+      });
+
+      monthTotalEl.textContent = formatMoney(monthTotal);
+      recurringTotalEl.textContent = formatMoney(recurringTotal);
+
+      list.innerHTML = '';
+      if (expenses.length === 0) {
+        const empty = document.createElement('li');
+        empty.className = 'expense-empty';
+        empty.textContent = 'No expenses yet. Add one to get started.';
+        list.appendChild(empty);
+        return;
+      }
+
+      expenses
+        .slice()
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .forEach(exp => {
+          const item = document.createElement('li');
+          item.className = 'expense-item';
+
+          const main = document.createElement('div');
+          main.className = 'expense-item-main';
+          const name = document.createElement('div');
+          name.className = 'expense-item-name';
+          name.textContent = exp.name;
+          const meta = document.createElement('div');
+          meta.className = 'expense-item-meta';
+          meta.textContent = (exp.recurring ? 'Started ' : '') + formatDate(exp.date);
+          if (exp.recurring) {
+            const badge = document.createElement('span');
+            badge.className = 'expense-badge';
+            badge.textContent = 'Monthly';
+            meta.appendChild(badge);
+          }
+          main.appendChild(name);
+          main.appendChild(meta);
+
+          const right = document.createElement('div');
+          right.className = 'expense-item-right';
+          const amount = document.createElement('div');
+          amount.className = 'expense-item-amount';
+          amount.textContent = formatMoney(exp.amount);
+          const del = document.createElement('button');
+          del.className = 'expense-delete';
+          del.type = 'button';
+          del.setAttribute('aria-label', 'Delete expense');
+          del.textContent = '✕';
+          del.addEventListener('click', () => {
+            const updated = loadExpenses().filter(e => e.id !== exp.id);
+            saveExpenses(updated);
+            render();
+          });
+          right.appendChild(amount);
+          right.appendChild(del);
+
+          item.appendChild(main);
+          item.appendChild(right);
+          list.appendChild(item);
+        });
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('expName').value.trim();
+      const amount = parseFloat(document.getElementById('expAmount').value);
+      const date = document.getElementById('expDate').value;
+      const recurring = document.getElementById('expRecurring').checked;
+      if (!name || isNaN(amount) || !date) return;
+
+      const expenses = loadExpenses();
+      expenses.push({ id: Date.now().toString(36), name, amount, date, recurring });
+      saveExpenses(expenses);
+      form.reset();
+      render();
+    });
+
+    render();
+  })();
 </script>
 
 <div class="convai-widget">
