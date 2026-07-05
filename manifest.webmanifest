@@ -1,0 +1,31 @@
+{
+  "name": "Vivid Outreach Group",
+  "short_name": "VOG",
+  "description": "An AI receptionist that answers your phones 24/7, books appointments on autopilot, and never misses a call.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#080808",
+  "theme_color": "#080808",
+  "icons": [
+    {
+      "src": "/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

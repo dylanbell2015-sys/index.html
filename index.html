@@ -10,6 +10,14 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- PWA -->
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#080808">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="VOG">
+<meta name="description" content="Vivid Outreach Group — an AI receptionist that answers your phones 24/7, books appointments on autopilot, and never misses a call.">
 <style>
   :root {
     --black: #080808;
@@ -452,6 +460,17 @@
   <elevenlabs-convai agent-id="agent_9401kf6m3emwe2x9gkvqedsgv2g5"></elevenlabs-convai>
   <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
 </div>
+
+<script>
+  // Register service worker for installable PWA + offline support
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/sw.js').catch(function (err) {
+        console.warn('SW registration failed:', err);
+      });
+    });
+  }
+</script>
 
 </body>
 </html>
